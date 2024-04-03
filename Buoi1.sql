@@ -49,3 +49,16 @@ SELECT * FROM Users
 
 EXEC SelectAllUsers;
 
+CREATE TRIGGER trg_users_uppercase_firstname ON Users
+AFTER INSERT
+AS
+BEGIN
+	UPDATE Users 
+	SET firstName = UPPER(i.firstName)
+	FROM inserted i
+	WHERE Users.id = i.id
+END
+
+INSERT INTO Users(firstName, lastName, email, password) VALUES(N'Tran', N'Dung', N'trandungksnb00@gmail.com', N'Tranvandung2001@')
+
+SELECT * FROM Users
